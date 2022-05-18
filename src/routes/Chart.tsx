@@ -24,15 +24,6 @@ const Chart = () => {
   const { isLoading, data } = useQuery<IHistorical[]>(["ohlcv", coinId], () =>
     fetchCoinHistory(coinId)
   );
-  console.log(data ? data[0] : null);
-  console.log(data);
-
-  const dateXaxis = data?.map((a) => {
-    const date = new Date(a.time_close);
-    const month = date.getMonth() + 1;
-    const day = date.getDate();
-    return day;
-  });
 
   return (
     <div>
@@ -58,10 +49,11 @@ const Chart = () => {
               axisTicks: {
                 show: false,
               },
-              categories: dateXaxis,
+              categories: data?.map((price) => price.time_close),
               labels: {
                 show: false,
               },
+              type: "datetime",
             },
             yaxis: {
               show: false,
@@ -80,6 +72,18 @@ const Chart = () => {
             stroke: {
               curve: "smooth",
               width: 4,
+            },
+            fill: {
+              type: "gradient",
+              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
+            },
+            colors: ["#0fbcf9"],
+            tooltip: {
+              y: {
+                formatter: function (val) {
+                  return `$${val.toFixed(2)}`;
+                },
+              },
             },
           }}
         />
