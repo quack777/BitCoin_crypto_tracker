@@ -3,9 +3,11 @@ import { Helmet } from "react-helmet-async";
 import { useQuery } from "react-query";
 import {
   Link,
+  Navigate,
   Outlet,
   useLocation,
   useMatch,
+  useNavigate,
   useParams,
 } from "react-router-dom";
 import styled from "styled-components";
@@ -76,6 +78,18 @@ const Tab = styled.span<{ isActive: boolean }>`
   a {
     display: block;
   }
+`;
+
+const NavigateBtn = styled.button`
+  position: absolute;
+  right: 50px;
+  top: 7vh;
+  padding: 10px 15px;
+  border-radius: 10px;
+  font-size: 15px;
+  color: ${(props) => props.theme.textColor};
+  background-color: transparent;
+  cursor: pointer;
 `;
 
 interface RouterState {
@@ -160,8 +174,11 @@ const Coin = () => {
 
   const loading = infoLoading || tickersLoading;
 
+  const navigate = useNavigate();
+
   return (
     <Container>
+      <NavigateBtn onClick={() => navigate("/")}>go Home</NavigateBtn>
       <Helmet>
         <title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}

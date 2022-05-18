@@ -70,10 +70,10 @@ const Coins = () => {
   return (
     <Container>
       <Helmet>
-        <title>코인</title>
+        <title>ビットコイン</title>
       </Helmet>
       <Header>
-        <Title>코인</Title>
+        <Title>ビットコイン</Title>
       </Header>
       {isLoading ? (
         <Loader>"Loading..."</Loader>
