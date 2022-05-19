@@ -2,11 +2,12 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useQuery } from "react-query";
 import { useOutletContext } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import { fetchCoinHistory } from "./api";
+import { isDarkAtom } from "./atom";
 
 interface ChartProps {
   coinId: string;
-  isDarkMode: boolean;
 }
 
 interface IHistorical {
@@ -21,7 +22,7 @@ interface IHistorical {
 }
 
 const Price = () => {
-  const { coinId, isDarkMode } = useOutletContext<ChartProps>();
+  const { coinId } = useOutletContext<ChartProps>();
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
@@ -45,6 +46,7 @@ const Price = () => {
     return { x, y };
   });
 
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <div>
       {isLoading ? (
@@ -59,7 +61,7 @@ const Price = () => {
           ]}
           options={{
             theme: {
-              mode: isDarkMode ? "dark" : "light",
+              mode: isDark ? "dark" : "light",
             },
             chart: {
               height: 300,

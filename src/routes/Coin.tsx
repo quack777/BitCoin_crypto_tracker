@@ -152,11 +152,7 @@ interface PriceData {
   };
 }
 
-interface CoinProps {
-  isDarkMode: boolean;
-}
-
-const Coin = ({ isDarkMode }: CoinProps) => {
+const Coin = () => {
   const { coinId } = useParams();
   const { state } = useLocation() as RouterState;
 
@@ -229,7 +225,7 @@ const Coin = ({ isDarkMode }: CoinProps) => {
               <Link to={`/${coinId}/price`}>Price</Link>
             </Tab>
           </Tabs>
-          <Outlet context={{ coinId, isDarkMode }} />
+          <Outlet context={{ coinId }} />
         </>
       )}
     </Container>

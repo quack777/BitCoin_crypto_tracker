@@ -4,6 +4,8 @@ import Router from "./routes/Router";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { HelmetProvider } from "react-helmet-async";
 import { darkTheme, lightTheme } from "./theme";
+import { useRecoilValue } from "recoil";
+import { isDarkAtom } from "./routes/atom";
 
 const GlobalStyle = createGlobalStyle`
   @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400&display=swap');
@@ -65,17 +67,13 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
-  const changeDarkMode = () => {
-    setIsDarkMode((cur) => !cur);
-  };
+  const isDark = useRecoilValue(isDarkAtom);
   return (
     <>
-      <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+      <ThemeProvider theme={isDark ? darkTheme : lightTheme}>
         <GlobalStyle />
         <HelmetProvider>
-          <Router isDarkmode={isDarkMode} changeDarkMode={changeDarkMode} />
+          <Router />
         </HelmetProvider>
         <ReactQueryDevtools initialIsOpen={true} />
       </ThemeProvider>
