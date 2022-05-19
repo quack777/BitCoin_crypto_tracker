@@ -21,10 +21,11 @@ const Header = styled.header`
 const CoinList = styled.ul``;
 
 const Coin = styled.li`
-  background-color: white;
-  color: ${(props) => props.theme.bgColor};
+  background-color: ${(props) => props.theme.cardBgColor};
+  color: ${(props) => props.theme.textColor};
   border-radius: 15px;
   margin-bottom: 10px;
+  border: 1px solid white;
   a {
     display: flex;
     align-items: center;
@@ -64,7 +65,12 @@ interface ICoin {
   type: string;
 }
 
-const Coins = () => {
+interface CoinsProps {
+  isDarkMode: boolean;
+  changeDarkMode: () => void;
+}
+
+const Coins = ({ isDarkMode, changeDarkMode }: CoinsProps) => {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
 
   return (
@@ -74,6 +80,7 @@ const Coins = () => {
       </Helmet>
       <Header>
         <Title>ビットコイン</Title>
+        <button onClick={() => changeDarkMode()}>changeDarkMode</button>
       </Header>
       {isLoading ? (
         <Loader>"Loading..."</Loader>

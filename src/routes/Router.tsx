@@ -5,7 +5,12 @@ import Coin from "./Coin";
 import Coins from "./Coins";
 import Price from "./Price";
 
-const Router = () => {
+interface RouterProps {
+  isDarkmode: boolean;
+  changeDarkMode: () => void;
+}
+
+const Router = ({ isDarkmode, changeDarkMode }: RouterProps) => {
   return (
     <BrowserRouter>
       <Routes>
@@ -13,7 +18,12 @@ const Router = () => {
           <Route path="chart" element={<Chart />} />
           <Route path="price" element={<Price />} />
         </Route>
-        <Route path="/" element={<Coins />} />
+        <Route
+          path="/"
+          element={
+            <Coins isDarkMode={isDarkmode} changeDarkMode={changeDarkMode} />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
