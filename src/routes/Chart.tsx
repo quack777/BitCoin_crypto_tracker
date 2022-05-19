@@ -2,7 +2,8 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useQuery } from "react-query";
 import { useOutletContext } from "react-router-dom";
-import { fetchCoinHistory } from "./api";
+import styled from "styled-components";
+import { fetchCoinHistory, fetchCoinTodayPrice } from "./api";
 
 interface ChartProps {
   coinId: string;
@@ -19,78 +20,53 @@ interface IHistorical {
   market_cap: number;
 }
 
+const PriceInfoSection = styled.section`
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+`;
+
+const PriceBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+`;
+
 const Chart = () => {
   const { coinId } = useOutletContext<ChartProps>();
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
-    () => fetchCoinHistory(coinId),
+    () => fetchCoinTodayPrice(coinId),
     {
       refetchInterval: 10000,
     }
   );
+  const todayData = data ? data[0] : null;
 
   return (
     <div>
       {isLoading ? (
-        "Loading chart..."
+        "Loading today Price..."
       ) : (
-        <ReactApexChart
-          type="line"
-          series={[
-            {
-              name: "Price",
-              data: data?.map((price) => price.close) as number[],
-            },
-          ]}
-          options={{
-            theme: {
-              mode: "dark",
-            },
-            xaxis: {
-              axisBorder: {
-                show: false,
-              },
-              axisTicks: {
-                show: false,
-              },
-              categories: data?.map((price) => price.time_close),
-              labels: {
-                show: false,
-              },
-              type: "datetime",
-            },
-            yaxis: {
-              show: false,
-            },
-            chart: {
-              height: 300,
-              width: 500,
-              toolbar: {
-                show: false,
-              },
-              background: "transparent",
-            },
-            grid: {
-              show: false,
-            },
-            stroke: {
-              curve: "smooth",
-              width: 4,
-            },
-            fill: {
-              type: "gradient",
-              gradient: { gradientToColors: ["#0be881"], stops: [0, 100] },
-            },
-            colors: ["#0fbcf9"],
-            tooltip: {
-              y: {
-                formatter: function (val) {
-                  return `$${val.toFixed(2)}`;
-                },
-              },
-            },
-          }}
-        />
+        <PriceInfoSection>
+          <PriceBox>
+            <p>open</p>
+            <p>{todayData?.close}</p>
+          </PriceBox>
+          <PriceBox>
+            <p>current</p>
+            <p>{todayData?.open}</p>
+          </PriceBox>
+          <PriceBox>
+            <p>low</p>
+            <p>{todayData?.low}</p>
+          </PriceBox>
+          <PriceBox>
+            <p>high</p>
+            <p>{todayData?.open}</p>
+          </PriceBox>
+        </PriceInfoSection>
       )}
     </div>
   );

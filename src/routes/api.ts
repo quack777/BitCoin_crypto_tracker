@@ -29,3 +29,10 @@ export const fetchCoinHistory = async (coinId: string) => {
   ).json();
   return responseData;
 };
+
+export const fetchCoinTodayPrice = async (coinId: string) => {
+  const responseData = await (
+    await fetch(`${BASE_URL}/coins/${coinId}/ohlcv/today`)
+  ).json();
+  return responseData;
+};
