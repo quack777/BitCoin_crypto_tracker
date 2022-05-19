@@ -6,6 +6,7 @@ import { fetchCoinHistory } from "./api";
 
 interface ChartProps {
   coinId: string;
+  isDarkMode: boolean;
 }
 
 interface IHistorical {
@@ -20,7 +21,7 @@ interface IHistorical {
 }
 
 const Price = () => {
-  const { coinId } = useOutletContext<ChartProps>();
+  const { coinId, isDarkMode } = useOutletContext<ChartProps>();
   const { isLoading, data } = useQuery<IHistorical[]>(
     ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
@@ -58,7 +59,7 @@ const Price = () => {
           ]}
           options={{
             theme: {
-              mode: "dark",
+              mode: isDarkMode ? "dark" : "light",
             },
             chart: {
               height: 300,

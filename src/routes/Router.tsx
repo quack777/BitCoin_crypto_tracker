@@ -14,7 +14,7 @@ const Router = ({ isDarkmode, changeDarkMode }: RouterProps) => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/:coinId/" element={<Coin />}>
+        <Route path="/:coinId/" element={<Coin isDarkMode={isDarkmode} />}>
           <Route path="chart" element={<Chart />} />
           <Route path="price" element={<Price />} />
         </Route>

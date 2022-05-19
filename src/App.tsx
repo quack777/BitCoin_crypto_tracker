@@ -68,7 +68,7 @@ const App = () => {
   const [isDarkMode, setIsDarkMode] = useState(true);
 
   const changeDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
+    setIsDarkMode((cur) => !cur);
   };
   return (
     <>
