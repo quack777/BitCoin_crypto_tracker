@@ -29,9 +29,18 @@ const Price = () => {
     }
   );
 
+  const fixedSecondNum = (num: number) => {
+    return num.toFixed(2);
+  };
+
   const chartData = data?.map((dat) => {
     const x = dat.time_close;
-    const y = [dat.open, dat.high, dat.low, dat.close];
+    const y = [
+      fixedSecondNum(dat.open),
+      fixedSecondNum(dat.high),
+      fixedSecondNum(dat.low),
+      fixedSecondNum(dat.close),
+    ];
     return { x, y };
   });
 
@@ -48,6 +57,9 @@ const Price = () => {
             },
           ]}
           options={{
+            theme: {
+              mode: "dark",
+            },
             chart: {
               height: 300,
               width: 500,
@@ -66,9 +78,10 @@ const Price = () => {
             xaxis: {
               type: "datetime",
               labels: { show: false },
+              categories: data?.map((price) => price.time_close),
               axisBorder: { show: false },
               axisTicks: { show: false },
-              tooltip: { enabled: false },
+              tooltip: { enabled: true },
             },
             yaxis: {
               labels: {
@@ -79,6 +92,10 @@ const Price = () => {
               },
             },
             tooltip: {
+              x: {
+                show: true,
+                format: "MM/dd",
+              },
               enabled: true,
             },
           }}
