@@ -11,3 +11,4 @@ https://api.coinpaprika.com/
 - react-helmet-async
 - react-apexcharts
 - styled-components
+- recoil I Love Recoil🥰
