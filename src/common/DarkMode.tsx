@@ -1,5 +1,5 @@
 import React from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import { isDarkAtom } from "../routes/atom";
 
@@ -53,8 +53,7 @@ const SliderRound = styled.div`
 `;
 
 const DarkMode = () => {
-  const toggleDarkMode = useSetRecoilState(isDarkAtom);
-  const isDark = useRecoilValue(isDarkAtom);
+  const [isDark, SetIsDark] = useRecoilState(isDarkAtom);
   return (
     <Container>
       <span>☀️</span>
@@ -62,7 +61,7 @@ const DarkMode = () => {
         <input
           type="checkbox"
           id="checkbox"
-          onChange={() => toggleDarkMode((cur) => !cur)}
+          onChange={() => SetIsDark((cur) => !cur)}
           defaultChecked={isDark}
         />
         <SliderRound className="slider"></SliderRound>
