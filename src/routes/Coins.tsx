@@ -4,6 +4,7 @@ import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
+import DarkMode from "../common/DarkMode";
 import { fetchCoins } from "./api";
 import { isDarkAtom } from "./atom";
 
@@ -74,14 +75,12 @@ const Coins = () => {
 
   return (
     <Container>
+      <DarkMode />
       <Helmet>
         <title>ビットコイン</title>
       </Helmet>
       <Header>
         <Title>ビットコイン</Title>
-        <button onClick={() => toggleDarkMode((cur) => !cur)}>
-          changeDarkMode
-        </button>
       </Header>
       {isLoading ? (
         <Loader>"Loading..."</Loader>
