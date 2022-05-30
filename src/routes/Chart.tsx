@@ -1,9 +1,8 @@
 import React from "react";
-import ReactApexChart from "react-apexcharts";
 import { useQuery } from "react-query";
 import { useOutletContext } from "react-router-dom";
 import styled from "styled-components";
-import { fetchCoinHistory, fetchCoinTodayPrice } from "./api";
+import { fetchCoinTodayPrice } from "./api";
 
 interface ChartProps {
   coinId: string;

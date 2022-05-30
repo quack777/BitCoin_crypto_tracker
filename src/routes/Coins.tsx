@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Helmet } from "react-helmet-async";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
 import styled from "styled-components";
 import DarkMode from "../common/DarkMode";
 import { fetchCoins } from "./api";
-import { isDarkAtom } from "./atom";
 
 const Container = styled.div`
   padding: 0px 20px;
@@ -70,8 +68,6 @@ interface ICoin {
 
 const Coins = () => {
   const { isLoading, data } = useQuery<ICoin[]>("allCoins", fetchCoins);
-
-  const toggleDarkMode = useSetRecoilState(isDarkAtom);
 
   return (
     <Container>
